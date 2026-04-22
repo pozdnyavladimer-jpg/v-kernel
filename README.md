@@ -4,6 +4,13 @@ Adaptive Geometry Compute Core
 
 ---
 
+## Full Architecture
+
+![V-Kernel Architecture](vkernel_full_system.png)
+
+---
+
+
 Overview
 
 V-Kernel is a self-correcting compute architecture designed to process complex systems as dynamic topological fields.
