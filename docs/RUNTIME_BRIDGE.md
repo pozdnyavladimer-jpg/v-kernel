@@ -2,6 +2,7 @@ Runtime Bridge (GitCube OS Integration)
 
 Overview
 
+
 The V-Kernel architecture is not only a theoretical hardware model.
 
 It already exists as a software runtime system implemented in:
@@ -14,6 +15,74 @@ This document defines the mapping between:
 - GitCube OS runtime (software execution)
 
 ---
+
+Reference Implementation
+
+The V-Kernel architecture is already implemented in a working runtime system:
+
+GitCube OS
+
+Repository:
+https://github.com/pozdnyavladimer-jpg/gitcube-os
+
+---
+
+What This Repository Demonstrates
+
+GitCube OS provides a real execution environment where:
+
+- consistency loops are active
+- graph-based memory evolves over time
+- entropy is continuously reduced (decay / pruning)
+- tasks emerge from structure instead of direct commands
+- system stabilizes itself through repeated cycles
+
+---
+
+Mapping to V-Kernel
+
+GitCube OS is not a separate project.
+
+It is a software-level realization of the same principles defined in V-Kernel:
+
+- consistency clock → run loop
+- entropy pruning → graph decay
+- topological memory → graph memory
+- bindu decision → task execution + routing
+- interconnect → routing system
+
+---
+
+Why This Link Matters
+
+This repository proves that:
+
+- the architecture is executable
+- the system is already functioning
+- behavior emerges from structure, not scripts
+
+---
+
+Important Note
+
+V-Kernel describes the architecture at:
+
+- hardware level
+- signal level
+- phase level
+
+GitCube OS implements:
+
+- runtime behavior
+- execution loop
+- adaptive system logic
+
+Together they form a complete system:
+
+architecture + runtime
+
+---
+
 
 Relationship
 
