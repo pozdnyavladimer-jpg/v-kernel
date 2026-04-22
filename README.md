@@ -16,6 +16,13 @@ The system operates on structure, flow, resonance, and memory rather than only c
 
 ---
 
+## Architecture Diagram
+
+![V-Kernel Architecture](architecture.png)
+
+---
+
+
 Core Idea
 
 Most modern systems fail not at the function level, but at the architecture level.
