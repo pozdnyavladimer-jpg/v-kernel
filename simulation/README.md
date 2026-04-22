@@ -14,3 +14,21 @@ Visual representation of:
 This is not a neural network.
 
 This is a dynamic field system.
+
+
+---
+
+## demo.ipynb
+
+Minimal V-Kernel demonstration.
+
+Shows:
+
+- noise-driven field evolution
+- propagation through weighted graph
+- reinforcement and decay
+- entropy pruning
+- emergence of bindu
+- coherence stabilization
+
+This demo is the simplest visible proof of the V-Kernel execution model.
