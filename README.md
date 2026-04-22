@@ -23,6 +23,12 @@ The system operates on structure, flow, resonance, and memory rather than only c
 ---
 
 
+Architecture Diagram
+
+"V-Kernel Architecture" (architecture.png)
+
+---
+
 Core Idea
 
 Most modern systems fail not at the function level, but at the architecture level.
@@ -48,8 +54,6 @@ The system detects:
 V-Kernel is organized into 7 processing layers.
 
 These are functional zones, not folders.
-
----
 
 L1–L2: Input & Structure Layer
 
@@ -122,11 +126,7 @@ V-Kernel does not use a linear execution clock.
 
 It uses a full-cycle coherence scan:
 
-Forward Pass
-→ Backward Pass
-→ Consistency Check
-→ Correction
-→ Memory Strengthening
+Forward Pass → Backward Pass → Consistency Check → Correction → Memory Strengthening
 
 ---
 
@@ -179,11 +179,11 @@ Memory is a stabilized pattern.
 
 Each unit is a MemoryAtom:
 
-identity
-phase_state
-band
-geometry
-strength
+- identity
+- phase_state
+- band
+- geometry
+- strength
 
 ---
 
@@ -219,11 +219,14 @@ Rules:
 - mutation requires consistency validation
 - unstable states cannot propagate upward
 
-This prevents:
+---
 
-- system collapse
-- uncontrolled mutation
-- memory corruption
+Isolation Guarantees
+
+- structural layer cannot directly mutate decision layer
+- working memory cannot overwrite core memory
+- mutation must pass consistency validation
+- entropy pruning cannot affect core identity without confirmation
 
 ---
 
@@ -240,29 +243,28 @@ Functions:
 - clears orphan topology
 - suppresses memory drift
 
-It does NOT:
-
-- correct
-- protect
-- decide
-
-It only removes.
-
 ---
 
 Activation Conditions
 
-Entropy Pruner is triggered only when:
-
-- forward scan detects inactive or unused structures
+- forward scan detects inactive structures
 - consistency check confirms irrelevance
 - Bindu Core allows removal
 
 ---
 
+Safety Constraint
+
+- requires consistency confirmation
+- requires Bindu approval
+- cannot remove high-strength memory atoms
+- operates only on low-signal structures
+
+---
+
 Placement
 
-Located in L7 (Mutation / Output Layer).
+Located in L7 (Mutation / Output Layer)
 
 Connected to:
 
@@ -274,33 +276,20 @@ Connected to:
 
 System Loop
 
-Input
-→ Structure Scan
-→ Flow Scan
-→ Resonance Scan
-→ Bindu Integration
-→ Consistency Clock
-→ Correction
-→ Entropy Pruning
-→ Memory Update
-→ Output
+Input → Structure Scan → Flow Scan → Resonance Scan → Bindu → Consistency Clock → Correction → Entropy Pruning → Memory → Output
 
 ---
 
 Architecture Model
 
-V-Kernel operates as:
-
 - graph-based system
 - feedback-controlled field
-- phase-aware memory structure
+- phase-aware memory
 - self-stabilizing loop
 
 ---
 
 Hardware Perspective
-
-This architecture maps to:
 
 - FPGA (phase + control blocks)
 - photonic systems (wave routing)
@@ -314,34 +303,27 @@ core/
 
 - state management
 - bindu logic
-- forward/backward processing
+- forward/backward
 
 memory/
 
 - memory atoms
 - storage
-- querying
 
 scan/
 
-- structure scan
-- flow scan
-- resonance scan
+- structure / flow / resonance
 
 clock/
 
 - consistency clock
-- scheduler
 
 mutate/
 
-- candidate generation
-- repair
-- entropy pruning
+- repair / entropy pruning
 
 graph/
 
-- graph building
 - topology metrics
 
 ---
@@ -363,15 +345,21 @@ V-Kernel:
 
 ---
 
+System Identity
+
+V-Kernel defines:
+
+- topology-aware systems
+- feedback-driven architecture
+- phase-isolated logic
+- self-correcting loops
+- memory-consolidating processes
+
+---
+
 Summary
 
-V-Kernel is a self-stabilizing compute architecture built on:
-
-- layered processing
-- bidirectional verification
-- phase isolation
-- adaptive memory
-- active cleanup
+V-Kernel is a self-stabilizing compute architecture.
 
 It is not a program.
 
