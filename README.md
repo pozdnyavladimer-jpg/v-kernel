@@ -7,7 +7,12 @@ Adaptive Geometry Compute Core
 ## Full Architecture
 
 ![V-Kernel Architecture](vkernel_full_system.png)
+V-Kernel is a field-based computation architecture where:
 
+- computation emerges from interaction
+- memory is distributed and dynamic
+- synchronization is achieved through coherence, not clocks
+- structure evolves through feedback and reinforcement
 ---
 
 
