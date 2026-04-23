@@ -292,3 +292,9 @@ Computation = stabilization of a dynamic field
 - Machine format → `research/minimal_compute.yaml`
 - Table view → `research/minimal_compute_table.md`
 ---
+
+## Minimal Model
+
+- Spec → `research/MINIMAL_COMPUTE.md`
+- Table → `research/minimal_compute_table.md`
+- ---
