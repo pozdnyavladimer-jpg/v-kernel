@@ -313,3 +313,5 @@ Computation = stabilization of a dynamic field
 See: research/paper.md
 
 ---
+- Simulation guide → `simulation/README.md`
+- ---
