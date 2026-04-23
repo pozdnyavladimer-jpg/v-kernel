@@ -4,41 +4,41 @@ Adaptive Geometry Compute Core
 
 ---
 
-## Full Architecture
+Full Architecture
 
-![V-Kernel Architecture](vkernel_full_system.png)
+"V-Kernel Architecture" (vkernel_full_system.png)
+
 V-Kernel is a field-based computation architecture where:
 
 - computation emerges from interaction
 - memory is distributed and dynamic
 - synchronization is achieved through coherence, not clocks
 - structure evolves through feedback and reinforcement
----
 
+---
 
 Overview
 
 V-Kernel is a self-correcting compute architecture designed to process complex systems as dynamic topological fields.
 
-Instead of executing linear instructions, the system continuously scans, compares, corrects, and stabilizes itself through a closed-loop process.
+Instead of executing linear instructions, the system continuously:
 
 scan → compare → correct → stabilize → remember
 
-The system operates on structure, flow, resonance, and memory rather than only code or tokens.
+The system operates on:
+
+- structure
+- flow
+- resonance
+- memory
+
+—not only code or tokens.
 
 ---
-
-## Architecture Diagram
-
-![V-Kernel Architecture](architecture.png)
-
----
-
 
 Architecture Diagram
-
-"V-Kernel Architecture" (architecture.png)
-
+![V-Kernel Architecture](vkernel_full_system.png)
+![V-Kernel Architecture](architecture.png)
 ---
 
 Core Idea
@@ -47,10 +47,10 @@ Most modern systems fail not at the function level, but at the architecture leve
 
 V-Kernel treats any input (code, graph, signal, image) as a structured field:
 
-- nodes = elements
-- edges = relationships
-- state = dynamic field
-- stability = coherence over time
+- nodes → elements
+- edges → relationships
+- state → dynamic field
+- stability → coherence over time
 
 The system detects:
 
@@ -61,11 +61,39 @@ The system detects:
 
 ---
 
+🔬 Research Layer (New)
+
+The architecture is backed by a formal geometric computation model.
+
+👉 See: "research/"
+
+This layer defines:
+
+field → projections → state → interaction → convergence → computation
+
+Key concepts:
+
+- multi-projection perception (radial / ring / node)
+- wave-based state interaction
+- interference-driven dynamics
+- convergence to stable attractor (Bindu)
+
+This connects V-Kernel to:
+
+- dynamical systems
+- graph signal processing
+- phase synchronization
+- probabilistic computation
+
+---
+
 7-Layer Adaptive Architecture
 
 V-Kernel is organized into 7 processing layers.
 
 These are functional zones, not folders.
+
+---
 
 L1–L2: Input & Structure Layer
 
@@ -150,7 +178,6 @@ Forward Pass
 Backward Pass
 
 - validates against memory and rules
-- reverse traversal
 
 Consistency Check
 
@@ -169,7 +196,7 @@ Strengthening
 
 Bindu Core (Convergence Event)
 
-Bindu activates when forward and backward states converge.
+Bindu activates when:
 
 forward_state ≈ backward_state
 
@@ -233,20 +260,9 @@ Rules:
 
 ---
 
-Isolation Guarantees
-
-- structural layer cannot directly mutate decision layer
-- working memory cannot overwrite core memory
-- mutation must pass consistency validation
-- entropy pruning cannot affect core identity without confirmation
-
----
-
 Entropy Pruner (Active Cleanup)
 
 Entropy Pruner is a dedicated cleanup unit.
-
-It performs targeted removal of non-useful states.
 
 Functions:
 
@@ -257,15 +273,7 @@ Functions:
 
 ---
 
-Activation Conditions
-
-- forward scan detects inactive structures
-- consistency check confirms irrelevance
-- Bindu Core allows removal
-
----
-
-Safety Constraint
+Safety Constraints
 
 - requires consistency confirmation
 - requires Bindu approval
@@ -274,21 +282,11 @@ Safety Constraint
 
 ---
 
-Placement
-
-Located in L7 (Mutation / Output Layer)
-
-Connected to:
-
-- Consistency Clock
-- Bindu Core
-- Topological Memory
-
----
-
 System Loop
 
-Input → Structure Scan → Flow Scan → Resonance Scan → Bindu → Consistency Clock → Correction → Entropy Pruning → Memory → Output
+Input → Structure Scan → Flow Scan → Resonance Scan → 
+Bindu → Consistency Clock → Correction → Entropy Pruning → 
+Memory → Output
 
 ---
 
@@ -311,32 +309,13 @@ Hardware Perspective
 
 Repository Structure
 
-core/
-
-- state management
-- bindu logic
-- forward/backward
-
-memory/
-
-- memory atoms
-- storage
-
-scan/
-
-- structure / flow / resonance
-
-clock/
-
-- consistency clock
-
-mutate/
-
-- repair / entropy pruning
-
-graph/
-
-- topology metrics
+core/      → state + bindu logic  
+memory/    → memory atoms  
+scan/      → structure / flow / resonance  
+clock/     → consistency clock  
+mutate/    → repair / entropy pruning  
+graph/     → topology metrics  
+research/  → formal model + math + simulation  
 
 ---
 
@@ -376,3 +355,5 @@ V-Kernel is a self-stabilizing compute architecture.
 It is not a program.
 
 It is a system that maintains its own coherence.
+
+---
