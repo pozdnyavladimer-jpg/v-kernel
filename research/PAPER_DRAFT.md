@@ -403,4 +403,121 @@ Observed in the current simulation:
 
 ---
 
+11. Quantitative Results
+
+To validate the stability and reproducibility of the system, multiple simulation runs were performed on the 19-node canonical lattice.
+
+Each run initializes:
+
+- random complex states per node
+- multiple candidate configurations
+- identical update and pruning rules
+
+---
+
+11.1 Experimental Setup
+
+- Number of nodes: 19
+- Graph: hexagonal / flower topology
+- Candidates per run: 10–15
+- Steps per run: 30
+- Update rule: neighbor mixing + damping
+- Pruning threshold: ε (low-amplitude removal)
+
+---
+
+11.2 Observed Metrics (Typical Run)
+
+Metric| Initial Value| Final Value| Behavior
+Coherence| ~0.35–0.45| ~0.98–1.00| Rapid increase, then plateau
+Shadow| low–moderate| near zero| Occasional spikes, then suppression
+Vitality| ~0.5–0.6| ~0.01–0.05| Strong decay over time
+Candidates| 10–12| 1–2| Monotonic reduction
+Dominant Node| none| stable| Emerges after ~10–20 steps
+
+---
+
+11.3 Convergence Dynamics
+
+Across runs, the following pattern is consistently observed:
+
+1. Initial Phase (Exploration)
+   
+   - high vitality
+   - low coherence
+   - many active candidates
+
+2. Interaction Phase
+   
+   - interference patterns emerge
+   - some candidates weaken
+   - shadow may spike temporarily
+
+3. Pruning Phase
+   
+   - low-amplitude states are removed
+   - candidate count drops sharply
+
+4. Stabilization Phase
+   
+   - coherence approaches maximum
+   - vitality approaches zero
+   - one candidate dominates
+
+5. Bindu Emergence
+   
+   - a single node exhibits dominant amplitude
+   - configuration becomes stable over time
+
+---
+
+11.4 Reproducibility
+
+Across repeated runs:
+
+- convergence is consistently achieved
+- final configurations differ in node identity (symmetry), but share structural properties
+- convergence speed varies slightly, but remains within similar step ranges
+
+This indicates:
+
+- the system is stable but not deterministic in path
+- multiple trajectories lead to structurally similar attractors
+
+---
+
+11.5 Key Empirical Findings
+
+The simulation supports the following:
+
+- coherence is a reliable convergence signal
+- vitality decay indicates stabilization
+- candidate pruning is essential for convergence
+- final state emerges, rather than being predefined
+
+---
+
+11.6 Minimal Empirical Law (Observed)
+
+From simulation behavior:
+
+if:
+    coherence → high
+    vitality → low
+    candidates → 1
+then:
+    system → stable attractor
+
+---
+
+11.7 Interpretation
+
+These results suggest that:
+
+- computation can be interpreted as trajectory selection in a candidate field
+- convergence is driven by interaction + suppression
+- stability is not imposed — it is emergent
+
+---
+
 END
