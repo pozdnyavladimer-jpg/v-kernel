@@ -1,4 +1,8 @@
 # Geometric Field Computation
+## Figure 1 — V-Kernel Computation Pipeline
+![V-Kernel Overview](../vkernel_overview.png)
+
+
 ## A Multi-Projection Convergence Model (V-Kernel)
 
 Author: Volodymyr Pozdnyak
