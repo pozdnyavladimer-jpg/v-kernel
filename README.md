@@ -282,4 +282,6 @@ It is a system that maintains its own coherence.
 
 Computation = stabilization of a dynamic field
 
+![V-Kernel Convergence Pipeline](vkernel_convergence_pipeline.png)
+
 ---
