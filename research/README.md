@@ -6,6 +6,15 @@ From Geometry → Perception → State → Convergence → Computation
 
 ---
 
+
+## 🔬 Simulations
+
+- vkernel_resonance_ai.ipynb  
+  → Prototype of resonance-based AI (classification via mode convergence)
+  
+
+  ---
+
 1. Overview
 
 This repository contains the research foundation of V-Kernel,
