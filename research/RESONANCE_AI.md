@@ -345,3 +345,15 @@ core/       → V-Kernel computation engine
 - Demo → `simulation/demo_resonance_ai.py`
 
 - ---
+## Minimal Package Layout
+
+```text
+core/
+├── __init__.py
+├── api.py
+├── vkernel_engine.py
+├── io_encoders.py
+└── mode_classifier.py
+
+```
+---
