@@ -335,3 +335,13 @@ core/       → V-Kernel computation engine
 
 
 ---
+
+## Minimal Executable Prototype
+
+- Engine → `core/vkernel_engine.py`
+- Encoders → `core/io_encoders.py`
+- Classifier → `core/mode_classifier.py`
+- API → `core/api.py`
+- Demo → `simulation/demo_resonance_ai.py`
+
+- ---
