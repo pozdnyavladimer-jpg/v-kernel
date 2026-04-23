@@ -1,180 +1,150 @@
-# V-Kernel Simulation
+V-Kernel Simulations
 
-This folder contains dynamic simulations of the V-Kernel architecture.
+This folder contains executable simulations and notebooks for the V-Kernel research model.
 
-## v_kernel_field_visual.ipynb
+The simulations demonstrate how a fixed graph geometry can support:
 
-Visual representation of:
-
-- field evolution
-- noise injection
-- pruning (entropy reduction)
-- coherence stabilization
-
-This is not a neural network.
-
-This is a dynamic field system.
-
-
----
-
-## demo.ipynb
-
-Minimal V-Kernel demonstration.
-
-Shows:
-
-- noise-driven field evolution
-- propagation through weighted graph
-- reinforcement and decay
-- entropy pruning
-- emergence of bindu
-- coherence stabilization
-
-This demo is the simplest visible proof of the V-Kernel execution model.
-
----
-
-V-Kernel Full Research Demo — Guide
-
-What this notebook does
-
-This notebook is a research demonstration of the V-Kernel idea:
-
-geometry -> projections -> candidate field -> convergence -> petal modes -> bindu
-
-It shows how a fixed graph geometry can support:
-
-- multiple projections of the same structure
-- noisy candidate fields
+- candidate field generation
 - interaction and pruning
-- convergence to a stable configuration
-- decomposition into graph eigenmodes
-- emergence of petal-like stable patterns
-
-This notebook is not a hardware implementation.
-It is a field computation prototype and research visualization tool.
+- convergence to stable states
+- graph eigenmodes
+- petal-like structures
+- resonance-based classification
 
 ---
 
-Conceptual pipeline
+Start Here
 
-The notebook follows this sequence:
+If you are new to the project, use this order:
 
-1. Structure
+1. "vkernel_full_research_demo.ipynb"
+   → full walkthrough of the research pipeline
 
-A canonical 19-node lattice is created.
+2. "vkernel_resonance_ai.ipynb"
+   → resonance-based classification prototype
 
-This is the base geometric field.
+3. "demo_resonance_ai.py"
+   → minimal runnable Python demo (no notebook required)
 
-2. Projections
+---
 
-Three projections read different aspects of the same field:
+Simulation Index
 
-- radial
-- ring
-- node
+"vkernel_full_research_demo.ipynb"
 
-These produce different measurements from the same graph state.
+Complete research walkthrough:
 
-3. Candidate field
+- canonical 19-node lattice
+- radial / ring / node projections
+- candidate field generation
+- live convergence
+- Laplacian eigenmodes
+- petal-mode emergence
+- Bindu interpretation
 
-A noisy initial field is created over the lattice.
+Best entry point for understanding the whole system.
 
-This represents a superposition of possible states.
+---
 
-4. Live convergence
+"vkernel_resonance_ai.ipynb"
 
-Multiple candidates evolve through:
+Prototype of resonance-based AI:
 
-- local interaction
+input → disturbance → field evolution → dominant mode → output
+
+Demonstrates:
+
+- input as field perturbation
+- interaction-driven stabilization
+- mode selection as classification
+
+---
+
+"vkernel_petal_modes.ipynb"
+
+Explains how petal-like structures emerge from graph eigenmodes.
+
+Focus:
+
+- Laplacian
+- spectral modes
+- smooth field rendering
+- symmetry and stable patterns
+
+Best notebook for understanding why “petals” appear.
+
+---
+
+"vkernel_mode_to_candidate_bridge.ipynb"
+
+Connects:
+
+- candidate field dynamics
+- spectral mode decomposition
+
+Shows how noisy candidate states collapse toward stable allowed modes.
+
+---
+
+"vkernel_live_simulation.ipynb"
+
+Dynamic candidate-field simulation with:
+
+- noise
 - wave-like update
 - pruning
-- scoring
+- convergence metrics
+- Bindu emergence
 
-The strongest candidate survives.
-
-5. Spectral decomposition
-
-The graph Laplacian is computed.
-
-Its eigenmodes define the allowed stable field patterns of the lattice.
-
-6. Petal mode interpretation
-
-Low-order eigenmodes appear as symmetric lobes / petals.
-
-These are not drawn manually.
-They emerge from the geometry.
-
-7. Bindu
-
-The dominant local point of the converged state is interpreted as Bindu:
-
-- attractor anchor
-- strongest local state
-- stable reference point
+Useful for observing stabilization over time.
 
 ---
 
-Main sections of the notebook
+"demo_resonance_ai.py"
 
-Section A — Canonical lattice
+Minimal executable script.
 
-Builds and displays the 19-node graph.
+Runs several inputs through the resonance pipeline and prints:
 
-Section B — Projections
+- dominant mode
+- label
+- confidence
 
-Defines:
-
-- "radial_projection"
-- "ring_projection"
-- "node_projection"
-
-Section C — State and metrics
-
-Defines:
-
-- encoded state
-- coherence
-- shadow
-- vitality
-- scoring
-
-Section D — Candidate dynamics
-
-Runs noisy candidate evolution and pruning.
-
-Section E — Laplacian modes
-
-Computes graph eigenmodes and visualizes petal-like patterns.
-
-Section F — Bridge
-
-Shows how live convergence relates to stable graph modes.
+Useful for quick tests outside notebooks.
 
 ---
 
-Parameters you can change
+Conceptual Pipeline
 
-The notebook is designed so behavior can be changed mainly through configuration values.
+All simulations are variations of the same research model:
 
-Random seed
+geometry → projections → candidate field → interaction → pruning → convergence → mode
 
-SEED = 42
+Interpretation:
+
+- geometry defines constraints
+- projections define perception
+- candidate field defines possible states
+- interaction drives evolution
+- pruning removes instability
+- convergence selects a stable mode
+
+---
+
+Main Parameters
+
+Most notebooks expose a small set of tunable parameters.
+
+"SEED"
 
 Controls reproducibility.
 
-- same seed -> same random initialization
-- different seed -> different candidate fields
-
-Use this when testing repeatability.
+- same seed → same initialization
+- different seed → different trajectories
 
 ---
 
-Number of candidates
-
-NUM_CANDIDATES = 10
+"NUM_CANDIDATES"
 
 Controls how many candidate states compete.
 
@@ -184,492 +154,308 @@ Higher values:
 - slower runtime
 - richer competition
 
-Lower values:
-
-- simpler behavior
-- faster runtime
-- weaker selection pressure
-
 Suggested range:
 
-- 5 to 20
+5 – 20
 
 ---
 
-Number of steps
+"STEPS"
 
-STEPS = 25
-
-Controls how long convergence is allowed to run.
+Controls convergence time.
 
 Higher values:
 
 - more time to stabilize
-- better for observing late convergence
-
-Lower values:
-
-- faster runs
-- useful for quick testing
+- better late-stage observation
 
 Suggested range:
 
-- 20 to 60
+20 – 60
 
 ---
 
-Noise level
+"NOISE_LEVEL"
 
-NOISE_LEVEL = 0.18
-
-Controls how chaotic the candidate field is during evolution.
+Controls how chaotic the initial candidate field is.
 
 Higher values:
 
-- more entropy
 - more exploration
-- harder convergence
+- less stability
 
 Lower values:
 
-- smoother dynamics
-- easier convergence
+- smoother convergence
 - less diversity
 
 Suggested range:
 
-- 0.05 to 0.30
+0.05 – 0.30
 
 ---
 
-Prune threshold
-
-PRUNE_THRESHOLD = 0.10
+"PRUNE_THRESHOLD"
 
 Controls when weak amplitudes are removed.
 
 Higher values:
 
-- aggressive pruning
+- aggressive cleanup
 - faster simplification
-- risk of killing useful structure
+- risk of over-pruning
 
 Lower values:
 
-- more candidate survival
-- slower cleanup
-- more noise retained
+- more survival
+- more retained noise
 
 Suggested range:
 
-- 0.05 to 0.20
+0.05 – 0.20
 
 ---
 
-Metric weights
+"sigma" in "smooth_field(...)"
 
-ALPHA_COHERENCE = 1.0
-BETA_SHADOW = 0.8
-GAMMA_VITALITY = 0.6
+Controls only the rendering.
 
-These define the score:
-
-score = coherence - shadow - vitality
-
-Interpretation:
-
-- "ALPHA_COHERENCE"
-  rewards global alignment
-
-- "BETA_SHADOW"
-  penalizes inconsistency / dispersion
-
-- "GAMMA_VITALITY"
-  penalizes rapid change
-
-If convergence is too unstable:
-
-- increase "BETA_SHADOW"
-- increase "GAMMA_VITALITY"
-
-If exploration dies too early:
-
-- reduce pruning
-- reduce "GAMMA_VITALITY"
-
----
-
-Functions you can customize
-
-"build_graph()"
-
-Defines the lattice itself.
-
-Change this if you want:
-
-- a larger flower lattice
-- random graph comparison
-- grid / hex / scale-free topology
-
-This is the main place to test whether geometry matters.
-
----
-
-"radial_projection()"
-
-Captures flow and gradient relative to the center.
-
-Change this if you want:
-
-- stronger center bias
-- distance-weighted flow
-- directional asymmetry
-
----
-
-"ring_projection()"
-
-Captures cyclic / radial organization.
-
-Change this if you want:
-
-- more rings
-- smoother radial bins
-- stronger resonance weighting
-
----
-
-"node_projection()"
-
-Captures node-local structure.
-
-Currently it depends on amplitude and degree.
-
-Change this if you want:
-
-- clustering coefficient
-- centrality
-- local motif weighting
-
----
-
-"encode_state()"
-
-Maps raw projections into the compact state vector.
-
-This is where you define what the system “measures”.
-
-You can change:
-
-- the number of components
-- the meaning of components
-- the normalization method
-
-This is one of the most important experimentation points.
-
----
-
-"wave_update()"
-
-Defines how local interaction spreads through the graph.
-
-This is the main dynamics function.
-
-Change this if you want:
-
-- stronger mixing
-- weaker memory
-- oscillatory behavior
-- more damping
-
----
-
-"prune()"
-
-Defines when weak states disappear.
-
-This controls entropy reduction.
-
----
-
-"smooth_field()"
-
-Controls how node values are rendered as continuous fields.
-
-It does not change the graph dynamics itself.
-It changes only the visualization.
-
-Main parameter:
-
-sigma=0.40
-
-Higher sigma:
+Higher values:
 
 - smoother, more blended fields
-- more “wave” appearance
 
-Lower sigma:
+Lower values:
 
-- sharper, more localized lobes
-- more node-like appearance
+- sharper local structure
+- stronger boundaries
 
 Suggested range:
 
-- 0.30 to 0.55
+0.30 – 0.55
 
 ---
 
-How to tune behavior
+How to Tune Behavior
 
-If you want stronger convergence
+Stronger convergence
 
 Use:
 
-- lower "NOISE_LEVEL"
-- moderate "PRUNE_THRESHOLD"
-- higher "ALPHA_COHERENCE"
-- lower "NUM_CANDIDATES"
+- lower noise
+- moderate pruning
+- fewer candidates
 
 Example:
 
 NOISE_LEVEL = 0.10
 PRUNE_THRESHOLD = 0.12
-ALPHA_COHERENCE = 1.2
+NUM_CANDIDATES = 8
 
 ---
 
-If you want more exploration
+More exploration
 
 Use:
 
-- higher "NOISE_LEVEL"
-- lower "PRUNE_THRESHOLD"
+- higher noise
+- lower pruning
 - more candidates
 
 Example:
 
-NUM_CANDIDATES = 15
 NOISE_LEVEL = 0.25
 PRUNE_THRESHOLD = 0.06
+NUM_CANDIDATES = 15
 
 ---
 
-If you want cleaner petal shapes
+Cleaner petal shapes
 
 Use:
 
 - lower noise
-- stronger mode filtering
+- lower-order mode selection
 - slightly larger rendering sigma
-
-Example:
-
-- reduce noise in candidate generation
-- use lower-order dominant modes
-- set "sigma=0.45"
 
 ---
 
-If you want sharper petal boundaries
+Sharper petal boundaries
 
 Use:
 
-- smaller "sigma"
-- stronger contour lines
-- lower smoothing
-
-Example:
-
-sigma=0.32
+- smaller sigma
+- stronger contour display
+- less smoothing
 
 ---
 
-What the outputs mean
+How to Read the Outputs
 
-Canonical lattice figure
+Canonical lattice
 
-Shows the base structure.
+The base graph geometry.
 
-This is the geometry that constrains all later behavior.
-
----
-
-Candidate field figure
-
-Shows the noisy initial field.
-
-This is not yet a stable result.
-It is a superposition / candidate state.
+This defines what interactions are allowed.
 
 ---
 
-Convergence metric plots
+Candidate field
+
+A noisy or structured initial state.
+
+This is not yet the result.
+
+It is the space of possibilities.
+
+---
+
+Convergence curves
 
 Coherence
-
-If this rises, the system is becoming more globally aligned.
+Rising coherence means stronger global alignment.
 
 Shadow
-
-If this falls, the system is becoming less inconsistent.
+Lower shadow means less dispersion / inconsistency.
 
 Vitality
-
-If this falls, the system is stabilizing.
+Lower vitality means the field is stabilizing.
 
 Active candidates
-
-If this falls, pruning and competition are working.
-
----
-
-Live converged candidate
-
-Shows the strongest candidate after interaction.
-
-This is the system’s selected dynamic result.
+Fewer active candidates means pruning is working.
 
 ---
 
 Petal modes
 
-Show stable graph eigenmodes.
+These are stable graph eigenmodes.
 
-These are the allowed modal structures of the lattice.
+They are not drawn manually.
 
-They explain why the geometry tends to produce recurring symmetric field patterns.
-
----
-
-Mode coefficient plot
-
-Shows how strongly the final candidate overlaps with each graph mode.
-
-A strong dominant mode means the converged field is close to one of the lattice’s natural stable structures.
+They emerge from the geometry of the lattice.
 
 ---
 
-How to experiment safely
+Mode coefficients
 
-Best practice:
+These show how strongly a state overlaps with each graph mode.
 
-Change only one thing at a time
-
-For example:
-
-- first only noise
-- then only pruning
-- then only candidate count
-
-Do not change everything at once.
+A strong dominant coefficient indicates collapse toward one stable mode.
 
 ---
 
-Keep the seed fixed when comparing
+Best Practices
 
-Use the same "SEED" while tuning one parameter.
+Change one parameter at a time
 
-That makes differences meaningful.
+Do not tune everything at once.
+
+Good order:
+
+1. noise
+2. pruning
+3. candidate count
+4. graph geometry
 
 ---
 
-Record settings
+Keep the seed fixed during comparisons
 
-When you get an interesting result, record:
+This makes differences meaningful.
+
+---
+
+Record interesting runs
+
+When you see useful behavior, record:
 
 - seed
-- candidate count
+- candidates
 - steps
 - noise
 - pruning threshold
-- metric weights
+- any mode settings
 
 ---
 
-Suggested experiments
+Suggested Experiments
 
-Experiment 1 — Noise sensitivity
+1. Noise sensitivity
 
 Try:
 
-NOISE_LEVEL = 0.05, 0.10, 0.20, 0.30
+0.05 / 0.10 / 0.20 / 0.30
 
 Question:
-How much noise can the system tolerate before convergence breaks?
+How much noise can the system tolerate?
 
 ---
 
-Experiment 2 — Pruning sensitivity
+2. Pruning sensitivity
 
 Try:
 
-PRUNE_THRESHOLD = 0.03, 0.08, 0.12, 0.18
+0.03 / 0.08 / 0.12 / 0.18
 
 Question:
 When does pruning become too weak or too aggressive?
 
 ---
 
-Experiment 3 — Candidate competition
+3. Candidate competition
 
 Try:
 
-NUM_CANDIDATES = 5, 10, 15, 20
+5 / 10 / 15 / 20 candidates
 
 Question:
 Does stronger competition improve stability?
 
 ---
 
-Experiment 4 — Geometry comparison
+4. Geometry comparison
 
-Replace "build_graph()" with:
+Replace the canonical graph with:
 
 - random graph
 - grid graph
-- larger lattice
+- larger flower lattice
 
 Question:
-Do petal-like stable modes depend on geometry?
+How strongly do stable modes depend on geometry?
 
 ---
 
-What this notebook is for
+What These Simulations Are
 
-This notebook is useful for:
+These simulations are:
 
-- conceptual demonstration
-- research explanation
-- parameter tuning
-- candidate-to-mode interpretation
-- generating figures for README / paper / posts
-
----
-
-What this notebook is not
-
-This notebook is not yet:
-
-- a production compute engine
-- a hardware design
-- a proof of quantum physics
-- a universal optimizer
-
-It is a research prototype for field-based graph computation.
+- research demonstrations
+- parameter exploration tools
+- figure generators
+- executable prototypes
 
 ---
 
-Minimal takeaway
+What These Simulations Are Not
 
-The main idea demonstrated here is:
+They are not yet:
+
+- production compute engines
+- hardware implementations
+- proofs of quantum physics
+- general-purpose optimizers
+
+They are research prototypes for field-based graph computation.
+
+---
+
+Minimal Takeaway
 
 The graph defines possible interactions.
 The field explores candidate states.
-Interaction and pruning remove unstable structure.
+Interaction and pruning remove instability.
 What survives is a stable mode allowed by the geometry.
 
-That is the core V-Kernel intuition.
+That is the core V-Kernel simulation idea.
 
 ---
-
-END
