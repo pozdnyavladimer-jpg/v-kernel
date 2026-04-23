@@ -326,3 +326,10 @@ Author direction:
 geometry → perception → convergence → computation
 
 ---
+
+
+Minimal engine:
+core/vkernel_engine.py
+
+
+---
