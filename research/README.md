@@ -2,84 +2,71 @@ V-Kernel Research
 
 A Field-Based Computation Model
 
-From Geometry → Perception → State → Convergence → Computation
+Geometry → Perception → State → Dynamics → Convergence → Computation
 
 ---
 
+Overview
 
-## 🔬 Simulations
+This folder contains the research foundation of V-Kernel.
 
-- vkernel_resonance_ai.ipynb  
-  → Prototype of resonance-based AI (classification via mode convergence)
-  
-
-  ---
-
-1. Overview
-
-This repository contains the research foundation of V-Kernel,
-a computational model where:
+V-Kernel defines a computational model where:
 
 - computation emerges from structure
-- perception defines state
+- perception defines the state space
+- interaction drives evolution
 - stability defines the result
 
-Unlike traditional systems, this model does not start with instructions.
+Unlike traditional systems, computation does not begin with instructions.
 
-It starts with a geometric field.
-
----
-
-2. Core Idea
-
-The system operates as a transformation pipeline:
-
-field → projections → state → interaction → convergence → result
-
-Where:
-
-- field = structured geometry
-- projections = different ways of observing the same structure
-- state = unified representation
-- interaction = wave dynamics
-- convergence = selection of stable configuration
-
-👉 Computation = convergence of multiple perspectives.
+It begins with a structured field.
 
 ---
 
-3. Figure 1 — System Overview
+Core Pipeline
+
+The system is defined as:
+
+field → projections → state → dynamics → convergence → mode → output
+
+Interpretation:
+
+- field → geometric constraint space
+- projections → multi-view perception
+- state → unified representation
+- dynamics → interaction + interference
+- convergence → stabilization
+- mode → selected solution
+
+👉 Computation = convergence to a stable mode
+
+---
+
+Figure — System Overview
 
 "V-Kernel Overview" (figures/vkernel_overview.png)
 
-This figure summarizes the entire model:
+This diagram shows:
 
-Left:
-
-- canonical geometric field (19-node lattice)
-
-Center:
-
-- projection operators (radial, ring, node)
-- state encoding (ℝ⁶ / ℂ⁶)
-
-Right:
-
-- wave interference (constructive / destructive)
-- interaction dynamics
-
-Bottom:
-
-- convergence process
-- emergence of stable attractor (Bindu)
+- canonical lattice (19 nodes)
+- projection operators (radial / ring / node)
+- state encoding
+- wave interaction
+- convergence to attractor (Bindu)
 
 ---
 
-4. Research Modules
+🔬 Simulations
 
-This folder is structured into independent but connected components:
+- "simulation/vkernel_resonance_ai.ipynb"
+  → resonance-based classification via mode convergence
+
+- "simulation/demo_resonance_ai.py"
+  → minimal executable demo (no notebook required)
 
 ---
+
+Research Modules
 
 📄 REPRODUCTION_PATH.md
 
@@ -91,7 +78,7 @@ Defines the full computational pipeline:
 - interaction rules
 - convergence conditions
 
-👉 Entry point for reproducing the system.
+👉 entry point for reproducing the system
 
 ---
 
@@ -99,66 +86,120 @@ Defines the full computational pipeline:
 
 Formal definition of:
 
-- lattice structure (G = (V, E))
+- graph structure (G = (V, E))
+- node layout (19-node lattice)
 - mode basis
 - projection operators
-- state mapping
 
 ---
 
 📄 WAVE_INTERFERENCE.md
 
-Defines dynamic evolution:
+Defines system dynamics:
 
-- complex state representation (ℂ⁶)
-- interference (constructive / destructive)
-- phase synchronization
-- pruning rules
+- complex state (ℂ⁶)
+- phase interaction
+- constructive / destructive interference
+- synchronization
 
 ---
 
 📄 CANDIDATE_FIELD.md
 
-Introduces parallel computation:
+Parallel exploration model:
 
-- candidate state ensemble
-- scoring function
-- convergence selection
+- candidate states
+- scoring
+- selection
 - attractor formation (Bindu)
 
 ---
 
-5. Key Principles
+📄 RESONANCE_AI.md
 
-5.1 Multi-Projection Perception
+Defines computation as resonance:
 
-The same structure is observed through multiple lenses:
-
-- radial → flow
-- ring → stability
-- node → events
+- input as disturbance
+- mode activation
+- classification via convergence
+- field-based inference
 
 ---
 
-5.2 Wave-Based Interaction
+📄 MINIMAL_COMPUTE.md
+
+Irreducible computation model:
+
+Structure → Dynamics → Mode
+
+Defines:
+
+- core pipeline
+- minimal equations
+- compute definition
+
+---
+
+📄 CORE_EQUATIONS.md
+
+Mathematical foundation:
+
+- Laplacian dynamics
+- eigenmodes
+- nonlinear damping
+- energy minimization
+
+---
+
+📄 minimal_compute_table.md
+
+Tabular representation of the model:
+
+- pipeline stages
+- mathematical mapping
+- interpretation shift
+
+---
+
+📄 minimal_compute.yaml
+
+Machine-readable specification:
+
+- pipeline
+- equations
+- interpretation
+- API mapping
+
+---
+
+Key Principles
+
+Multi-Projection Perception
+
+The same structure is observed through:
+
+- radial → flow
+- ring → cycles
+- node → discrete events
+
+---
+
+Wave-Based Interaction
 
 State evolves through:
 
+- diffusion
 - interference
+- nonlinear suppression
 - resonance
-- phase alignment
 
 ---
 
-5.3 Convergence as Computation
+Convergence as Computation
 
-No instructions.
+The system does not construct answers.
 
-Only:
-
-- competing states
-- interaction
-- stabilization
+It eliminates instability.
 
 Result:
 
@@ -166,46 +207,48 @@ stable geometric configuration
 
 ---
 
-6. Relation to Existing Fields
+Relation to Existing Fields
 
 This model connects to:
 
 - dynamical systems (attractors)
 - graph signal processing
+- spectral graph theory
 - phase synchronization (Kuramoto models)
 - probabilistic inference
 - ensemble optimization
 
 ---
 
-7. Interpretation
+Interpretation
 
-V-Kernel can be understood as:
+V-Kernel can be interpreted as:
 
 - a graph-based compute system
-- a wave-interference processor
+- a field processing unit (FPU)
+- a resonance-based AI model
 - a convergence engine
-- a geometric computation model
 
 ---
 
-8. Minimal Definition
+Minimal Definition
 
-Computation = convergence of projections over a shared field
+Computation = convergence of interacting states over a structured field
 
 ---
 
-9. Status
+Status
 
 STATE: ACTIVE RESEARCH
 
-- architecture defined
-- simulation in progress
-- formalization ongoing
+- core architecture defined
+- minimal engine implemented ("core/")
+- simulations operational
+- formalization in progress
 
 ---
 
-10. Author
+Author
 
 Volodymyr Pozdnyak
 
