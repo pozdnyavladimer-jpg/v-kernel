@@ -1,17 +1,102 @@
 compute_model:
-  pipeline:
-    - structure: G
-    - projections: P(G)
-    - state: z0
-    - dynamics: dz/dt = Lz - beta * z^3
-    - convergence: stable_state
-    - mode: eigenmode
-    - output: mode_index
+name: V-Kernel Minimal Compute Model
+version: 0.1
 
-  equations:
-    evolution: "dz/dt = Lz - βz^3"
-    compute: "argmax_k <psi_k, evolve(x)>"
+principle:
+statement: "Computation is convergence to a stable eigenmode."
+short_form: "Structure -> Dynamics -> Mode"
+physical_form: "Geometry -> Interaction -> Stability"
 
-  interpretation:
-    - computation_is: convergence
-    - not: instruction_execution
+pipeline:
+- stage: structure
+symbol: G
+description: "Graph constraint space"
+representation: "G = (V, E)"
+
+- stage: projections
+  symbol: P
+  description: "Multiple views extracted from the same structure"
+  representation: "P(G)"
+
+- stage: state
+  symbol: z0
+  description: "Initial disturbance / signal / candidate field"
+  representation: "z0"
+
+- stage: dynamics
+  symbol: z
+  description: "Field evolution under graph interaction and damping"
+  representation: "dz/dt = Lz - beta * z^3"
+
+- stage: convergence
+  symbol: z_star
+  description: "Stable state after evolution"
+  representation: "z -> z*"
+
+- stage: mode
+  symbol: psi_k
+  description: "Allowed stable eigenmodes of the graph"
+  representation: "L psi_k = lambda_k psi_k"
+
+- stage: output
+  symbol: k
+  description: "Dominant mode index or stable pattern"
+  representation: "argmax_k <psi_k, z*>"
+
+operators:
+graph:
+adjacency: A
+degree: D
+laplacian: L
+definition: "L = D - A"
+
+evolution:
+  equation: "dz/dt = Lz - beta * z^3"
+  components:
+    diffusion: "Lz"
+    damping: "- beta * z^3"
+
+modal_decomposition:
+  equation: "z = sum_k c_k psi_k"
+  coefficient: "c_k = <psi_k, z>"
+
+output_selection:
+  equation: "compute(x) = argmax_k <psi_k, evolve(x)>"
+
+interpretations:
+structure:
+meaning: "Defines what interactions are possible"
+projections:
+meaning: "Provides multiple readings of the same geometry"
+state:
+meaning: "Injected signal / disturbance"
+dynamics:
+meaning: "Interaction and suppression of unstable amplitudes"
+convergence:
+meaning: "Emergence of stability"
+mode:
+meaning: "Natural solution space of the structure"
+output:
+meaning: "Selected stable configuration"
+
+comparisons:
+traditional_computing:
+input: "data"
+process: "instructions"
+output: "symbolic result"
+
+vkernel:
+  input: "disturbance"
+  process: "field evolution"
+  output: "stable mode"
+
+implementation_hints:
+graph_library: "networkx"
+numeric_library: "numpy"
+visualization: "matplotlib"
+notebook_path: "simulation/vkernel_full_research_demo.ipynb"
+
+summary:
+minimal_statement: "Graph-constrained field evolution selecting a stable mode."
+core_equation: "dz/dt = Lz - beta * z^3"
+compute_equation: "compute(x) = argmax_k <psi_k, evolve(x)>"
