@@ -1,0 +1,466 @@
+import math
+import random
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+
+
+# ============================================================
+# V-KERNEL LIVE SIMULATION
+# ------------------------------------------------------------
+# Shows:
+# - canonical 19-node lattice
+# - multiple candidates
+# - 3 projections (radial / ring / node)
+# - state encoding
+# - wave-like interaction
+# - pruning
+# - convergence to stable attractor (Bindu)
+# ============================================================
+
+
+# -----------------------------
+# CONFIG
+# -----------------------------
+SEED = 42
+NUM_CANDIDATES = 14
+STEPS = 40
+
+NOISE_LEVEL = 0.18
+PRUNE_THRESHOLD = 0.10
+
+ALPHA_COHERENCE = 1.0
+BETA_SHADOW = 0.8
+GAMMA_VITALITY = 0.6
+
+CONVERGENCE_COHERENCE = 0.92
+CONVERGENCE_SHADOW = 0.03
+CONVERGENCE_VITALITY = 0.02
+
+SHOW_EVERY = 5
+
+random.seed(SEED)
+np.random.seed(SEED)
+
+
+# -----------------------------
+# DATA STRUCTURES
+# -----------------------------
+@dataclass
+class Candidate:
+    cid: int
+    node_state: np.ndarray          # shape: (N,) complex
+    encoded_state: np.ndarray       # shape: (6,) real
+    coherence: float = 0.0
+    shadow: float = 0.0
+    vitality: float = 0.0
+    score: float = 0.0
+    active: bool = True
+
+
+# -----------------------------
+# CANONICAL 19-NODE LATTICE
+# -----------------------------
+def generate_hex_positions() -> Dict[int, Tuple[float, float]]:
+    """
+    19 nodes:
+    - 1 center
+    - 6 first ring
+    - 12 second ring
+    """
+    positions = {}
+    idx = 0
+
+    # center
+    positions[idx] = (0.0, 0.0)
+    idx += 1
+
+    # ring 1
+    r1 = 1.0
+    for k in range(6):
+        angle = 2 * math.pi * k / 6
+        positions[idx] = (r1 * math.cos(angle), r1 * math.sin(angle))
+        idx += 1
+
+    # ring 2
+    r2 = 2.0
+    for k in range(12):
+        angle = 2 * math.pi * k / 12
+        positions[idx] = (r2 * math.cos(angle), r2 * math.sin(angle))
+        idx += 1
+
+    return positions
+
+
+def build_graph() -> nx.Graph:
+    pos = generate_hex_positions()
+    G = nx.Graph()
+
+    for n, p in pos.items():
+        G.add_node(n, pos=p)
+
+    # connect by geometric proximity
+    nodes = list(G.nodes())
+    for i in nodes:
+        xi, yi = G.nodes[i]["pos"]
+        for j in nodes:
+            if i >= j:
+                continue
+            xj, yj = G.nodes[j]["pos"]
+            d = math.dist((xi, yi), (xj, yj))
+            if d <= 1.18:
+                G.add_edge(i, j, weight=1.0)
+
+    return G
+
+
+# -----------------------------
+# PROJECTIONS
+# -----------------------------
+def radial_projection(G: nx.Graph, z: np.ndarray) -> np.ndarray:
+    """
+    Captures flow / gradients relative to center.
+    """
+    center = np.array(G.nodes[0]["pos"])
+    out = np.zeros(len(G.nodes()), dtype=float)
+
+    for i in G.nodes():
+        pi = np.array(G.nodes[i]["pos"])
+        ri = np.linalg.norm(pi - center) + 1e-8
+        out[i] = abs(z[i]) / ri
+
+    return out
+
+
+def ring_projection(G: nx.Graph, z: np.ndarray) -> np.ndarray:
+    """
+    Captures periodicity / stability by grouping nodes into rings.
+    """
+    out = np.zeros(len(G.nodes()), dtype=float)
+    center = np.array(G.nodes[0]["pos"])
+
+    for i in G.nodes():
+        pi = np.array(G.nodes[i]["pos"])
+        r = np.linalg.norm(pi - center)
+        if r < 0.5:
+            ring_id = 0
+        elif r < 1.5:
+            ring_id = 1
+        else:
+            ring_id = 2
+        out[i] = abs(z[i]) * (ring_id + 1)
+
+    return out
+
+
+def node_projection(G: nx.Graph, z: np.ndarray) -> np.ndarray:
+    """
+    Captures events / peaks / connections.
+    """
+    out = np.zeros(len(G.nodes()), dtype=float)
+
+    for i in G.nodes():
+        degree = G.degree(i)
+        out[i] = abs(z[i]) * (1.0 + 0.15 * degree)
+
+    return out
+
+
+# -----------------------------
+# STATE ENCODING
+# -----------------------------
+def encode_state(
+    radial: np.ndarray,
+    ring: np.ndarray,
+    node: np.ndarray,
+    complex_state: np.ndarray,
+) -> np.ndarray:
+    """
+    Encodes into 6D real state:
+    [mass, flow, structure, balance, law, potential]
+    """
+    mass = float(np.mean(np.abs(complex_state)))
+    flow = float(np.mean(radial))
+    structure = float(np.std(node))
+    balance = float(1.0 / (1.0 + np.std(ring)))
+    law = float(np.mean(np.real(complex_state)))
+    potential = float(np.max(np.abs(complex_state)))
+
+    return np.array([mass, flow, structure, balance, law, potential], dtype=float)
+
+
+# -----------------------------
+# INTERACTION
+# -----------------------------
+def adjacency_matrix(G: nx.Graph) -> np.ndarray:
+    A = nx.to_numpy_array(G, weight="weight", dtype=float)
+    row_sums = A.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1.0
+    return A / row_sums
+
+
+def wave_update(W: np.ndarray, z: np.ndarray) -> np.ndarray:
+    """
+    Wave-like propagation over graph.
+    """
+    mixed = W @ z
+    return 0.85 * mixed + 0.15 * z
+
+
+def add_noise(z: np.ndarray, level: float) -> np.ndarray:
+    amp_noise = np.random.uniform(-level, level, size=z.shape)
+    phase_noise = np.random.uniform(-level, level, size=z.shape)
+
+    amp = np.abs(z) + amp_noise
+    amp = np.clip(amp, 0.0, None)
+
+    phase = np.angle(z) + phase_noise
+    return amp * np.exp(1j * phase)
+
+
+def prune(z: np.ndarray, threshold: float) -> np.ndarray:
+    z2 = z.copy()
+    z2[np.abs(z2) < threshold] = 0.0
+    return z2
+
+
+# -----------------------------
+# METRICS
+# -----------------------------
+def compute_coherence(z: np.ndarray) -> float:
+    mag_sum = np.abs(np.sum(z))
+    mag_total = np.sum(np.abs(z)) + 1e-8
+    return float(mag_sum / mag_total)
+
+
+def compute_shadow(encoded_state: np.ndarray) -> float:
+    return float(np.var(encoded_state))
+
+
+def compute_vitality(prev: np.ndarray, current: np.ndarray) -> float:
+    return float(np.mean(np.abs(current - prev)))
+
+
+def compute_score(coh: float, shadow: float, vitality: float) -> float:
+    return (
+        ALPHA_COHERENCE * coh
+        - BETA_SHADOW * shadow
+        - GAMMA_VITALITY * vitality
+    )
+
+
+def detect_bindu(z: np.ndarray) -> int:
+    return int(np.argmax(np.abs(z)))
+
+
+# -----------------------------
+# INITIALIZATION
+# -----------------------------
+def init_candidate(cid: int, n_nodes: int) -> Candidate:
+    amp = np.random.uniform(0.2, 1.0, size=n_nodes)
+    phase = np.random.uniform(0.0, 2 * np.pi, size=n_nodes)
+    z = amp * np.exp(1j * phase)
+
+    return Candidate(
+        cid=cid,
+        node_state=z,
+        encoded_state=np.zeros(6, dtype=float),
+    )
+
+
+# -----------------------------
+# VISUALIZATION
+# -----------------------------
+def plot_candidate_graph(
+    G: nx.Graph,
+    candidate: Candidate,
+    step: int,
+    title_suffix: str = "",
+) -> None:
+    pos = nx.get_node_attributes(G, "pos")
+    z = candidate.node_state
+    bindu = detect_bindu(z)
+
+    amps = np.abs(z)
+    phases = np.angle(z)
+
+    # node sizes
+    sizes = 300 + 900 * amps
+    sizes[bindu] = max(sizes[bindu], 1400)
+
+    # colors from phase
+    norm_phase = (phases + np.pi) / (2 * np.pi)
+    colors = plt.cm.twilight(norm_phase)
+
+    plt.figure(figsize=(7, 7))
+    nx.draw_networkx_edges(G, pos, alpha=0.25, width=1.0)
+    nx.draw_networkx_nodes(
+        G,
+        pos,
+        node_color=colors,
+        node_size=sizes,
+        edgecolors="white",
+        linewidths=0.8,
+    )
+
+    labels = {n: str(n) for n in G.nodes()}
+    nx.draw_networkx_labels(G, pos, labels=labels, font_size=8)
+
+    plt.title(
+        f"Step {step} | Candidate {candidate.cid}{title_suffix}\n"
+        f"coh={candidate.coherence:.3f} "
+        f"shadow={candidate.shadow:.3f} "
+        f"vitality={candidate.vitality:.3f} "
+        f"bindu={bindu}"
+    )
+    plt.axis("off")
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_global_metrics(history: Dict[str, List[float]]) -> None:
+    steps = range(len(history["best_coherence"]))
+
+    plt.figure(figsize=(9, 4))
+    plt.plot(steps, history["best_coherence"], marker="o")
+    plt.title("Best Candidate Coherence")
+    plt.xlabel("Step")
+    plt.ylabel("Coherence")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+    plt.figure(figsize=(9, 4))
+    plt.plot(steps, history["best_shadow"], marker="o")
+    plt.title("Best Candidate Shadow")
+    plt.xlabel("Step")
+    plt.ylabel("Shadow")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+    plt.figure(figsize=(9, 4))
+    plt.plot(steps, history["best_vitality"], marker="o")
+    plt.title("Best Candidate Vitality")
+    plt.xlabel("Step")
+    plt.ylabel("Vitality")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+    plt.figure(figsize=(9, 4))
+    plt.plot(steps, history["active_candidates"], marker="o")
+    plt.title("Active Candidates Over Time")
+    plt.xlabel("Step")
+    plt.ylabel("Count")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+
+# -----------------------------
+# MAIN LOOP
+# -----------------------------
+def run_simulation():
+    G = build_graph()
+    W = adjacency_matrix(G)
+    n_nodes = len(G.nodes())
+
+    candidates = [init_candidate(i, n_nodes) for i in range(NUM_CANDIDATES)]
+
+    history = {
+        "best_coherence": [],
+        "best_shadow": [],
+        "best_vitality": [],
+        "active_candidates": [],
+    }
+
+    print("=== V-KERNEL LIVE SIMULATION START ===")
+
+    for step in range(STEPS):
+        active_count = 0
+
+        for c in candidates:
+            if not c.active:
+                continue
+
+            active_count += 1
+            prev = c.node_state.copy()
+
+            # evolve
+            z = add_noise(c.node_state, NOISE_LEVEL)
+            z = wave_update(W, z)
+            z = prune(z, PRUNE_THRESHOLD)
+
+            # projections
+            radial = radial_projection(G, z)
+            ring = ring_projection(G, z)
+            node = node_projection(G, z)
+
+            # encode
+            encoded = encode_state(radial, ring, node, z)
+
+            # metrics
+            coh = compute_coherence(z)
+            shadow = compute_shadow(encoded)
+            vitality = compute_vitality(prev, z)
+            score = compute_score(coh, shadow, vitality)
+
+            # save
+            c.node_state = z
+            c.encoded_state = encoded
+            c.coherence = coh
+            c.shadow = shadow
+            c.vitality = vitality
+            c.score = score
+
+            # deactivate very weak candidate
+            if np.sum(np.abs(z)) < 0.8:
+                c.active = False
+
+        # select best active candidate
+        active_candidates = [c for c in candidates if c.active]
+        if not active_candidates:
+            print(f"[STEP {step}] no active candidates remain")
+            break
+
+        best = max(active_candidates, key=lambda c: c.score)
+
+        history["best_coherence"].append(best.coherence)
+        history["best_shadow"].append(best.shadow)
+        history["best_vitality"].append(best.vitality)
+        history["active_candidates"].append(len(active_candidates))
+
+        print(
+            f"[STEP {step}] "
+            f"best={best.cid} "
+            f"coh={best.coherence:.3f} "
+            f"shadow={best.shadow:.3f} "
+            f"vitality={best.vitality:.3f} "
+            f"score={best.score:.3f} "
+            f"active={len(active_candidates)} "
+            f"bindu={detect_bindu(best.node_state)}"
+        )
+
+        if step % SHOW_EVERY == 0 or step == STEPS - 1:
+            plot_candidate_graph(G, best, step, title_suffix=" | BEST")
+
+        converged = (
+            best.coherence >= CONVERGENCE_COHERENCE
+            and best.shadow <= CONVERGENCE_SHADOW
+            and best.vitality <= CONVERGENCE_VITALITY
+        )
+
+        if converged:
+            print(f"=== CONVERGENCE REACHED AT STEP {step} | BINDU={detect_bindu(best.node_state)} ===")
+            break
+
+    print("=== V-KERNEL LIVE SIMULATION END ===")
+    plot_global_metrics(history)
+
+
+if __name__ == "__main__":
+    run_simulation()
