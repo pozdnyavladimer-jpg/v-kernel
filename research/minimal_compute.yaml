@@ -1,0 +1,17 @@
+compute_model:
+  pipeline:
+    - structure: G
+    - projections: P(G)
+    - state: z0
+    - dynamics: dz/dt = Lz - beta * z^3
+    - convergence: stable_state
+    - mode: eigenmode
+    - output: mode_index
+
+  equations:
+    evolution: "dz/dt = Lz - βz^3"
+    compute: "argmax_k <psi_k, evolve(x)>"
+
+  interpretation:
+    - computation_is: convergence
+    - not: instruction_execution
