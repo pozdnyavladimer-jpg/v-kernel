@@ -298,3 +298,9 @@ Computation = stabilization of a dynamic field
 - Spec → `research/MINIMAL_COMPUTE.md`
 - Table → `research/minimal_compute_table.md`
 - ---
+## Minimal Compute Specification
+
+- Human-readable → `research/MINIMAL_COMPUTE.md`
+- Table view → `research/minimal_compute_table.md`
+- Machine-readable → `research/minimal_compute.yaml`
+- ---
