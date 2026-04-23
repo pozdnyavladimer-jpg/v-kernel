@@ -304,3 +304,7 @@ Computation = stabilization of a dynamic field
 - Table view → `research/minimal_compute_table.md`
 - Machine-readable → `research/minimal_compute.yaml`
 - ---
+- `simulation/demo_resonance_ai.py`
+  → command-line demo for resonance-based mode classification
+
+  ---
