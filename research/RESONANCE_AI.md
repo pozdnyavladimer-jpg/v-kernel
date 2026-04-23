@@ -331,5 +331,7 @@ geometry → perception → convergence → computation
 Minimal engine:
 core/vkernel_engine.py
 
+core/       → V-Kernel computation engine
+
 
 ---
