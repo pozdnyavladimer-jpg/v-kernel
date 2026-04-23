@@ -248,6 +248,9 @@ STATE: ACTIVE RESEARCH
 
 ---
 
+- Executable walkthroughs → `simulation/README.md`
+
+- ---
 Author
 
 Volodymyr Pozdnyak
