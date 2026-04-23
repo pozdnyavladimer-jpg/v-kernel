@@ -308,3 +308,8 @@ Computation = stabilization of a dynamic field
   → command-line demo for resonance-based mode classification
 
   ---
+## Paper
+
+See: research/paper.md
+
+---
