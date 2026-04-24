@@ -256,3 +256,5 @@ Author
 Volodymyr Pozdnyak
 
 ---
+- GEOMETRY_AS_SOLVER.md → formal explanation of structure-driven computation
+- ---
