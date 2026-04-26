@@ -315,3 +315,21 @@ See: research/paper.md
 ---
 - Simulation guide → `simulation/README.md`
 - ---
+🚀 Proof-of-Concept
+
+V-Kernel includes a working stability scanner demo.
+
+The system evaluates code not by rules, but by field convergence.
+
+See results:
+
+reports/demo_results.md
+
+Example:
+
+good_code.py   → HIGH (stable structure)
+bad_loop.py    → LOW (instability detected)
+bare_except.py → LOW (instability detected)
+
+👉 code → state → convergence → stability
+---
