@@ -855,6 +855,52 @@ D13_WAVE_TO_MEMORY is the first working prototype where field communication chan
 Result:
 
 yes — the transmitted sequence was decoded and stored with 100% accuracy.
+D15_FULL_IO_LOOP
+
+Notebook:
+
+notebooks/diffusion_full_io_loop.ipynb
+
+Meaning:
+
+A complete field-based input/output loop.
+
+The system transmits a binary wave sequence, decodes it, writes it into bounded memory slots, holds the stored state, reads the memory back, and reconstructs the output wave sequence.
+
+Pipeline:
+
+input wave → decode → memory write → memory hold → memory readout → output wave
+
+Observed result:
+
+Metric| Value
+Result| FULL_IO_LOOP_LOCKED
+Input sequence| 10110101
+Decoded sequence| 10110101
+Stored sequence| 10110101
+Readout sequence| 10110101
+Decode accuracy| 1.0
+Memory accuracy| 1.0
+Readout accuracy| 1.0
+Full loop accuracy| 1.0
+
+Interpretation:
+
+The D15 prototype demonstrates that a wave-transmitted signal can complete a full symbolic memory cycle.
+
+This connects the previous modules:
+
+Symbol| Role
+D12_WAVE_CHANNELS| wave transmission
+D13_WAVE_TO_MEMORY| wave decoded into memory
+D14_MEMORY_READOUT| memory read back into wave output
+D15_FULL_IO_LOOP| complete closed I/O loop
+
+This is the first complete V-Kernel diffusion I/O loop.
+
+Important note:
+
+This is a controlled prototype. It demonstrates the architecture under clean simulation conditions. The next step is to test robustness under noise, signal loss, delay variation, threshold drift, and memory decay.
 
 Author
 
