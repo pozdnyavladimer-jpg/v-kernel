@@ -717,6 +717,52 @@ field → behavior → symbol → logic → address → boundary → clock → m
 The Diffusion State Language is the first symbolic grammar of V-Kernel field computation.
 
 ---
+D11_ENTRAINMENT
+
+Notebook:
+
+notebooks/diffusion_synchronization.ipynb
+
+Meaning:
+
+Two oscillating field cells synchronize their rhythm through weak coupling.
+
+Observed result:
+
+Metric| Value
+Result| PHASE_LOCKED
+Final phase error| 0.475
+Final phase std| 0.0
+Final frequency difference| 0.0
+Coupling| 0.35
+Omega A| 1.0
+Omega B| 1.32
+
+Interpretation:
+
+The two oscillators started with different frequencies and phases.
+
+After weak coupling, their frequencies converged.
+
+The remaining phase difference became stable.
+
+This means the cells reached phase locking.
+
+Field rule:
+
+two local clocks + weak coupling → shared rhythm
+
+Engineering meaning:
+
+D11_ENTRAINMENT is the first working prototype of synchronization between field memory/clock cells.
+
+It answers:
+
+can two field clocks align their rhythm?
+
+Result:
+
+yes — the cells reached a shared frequency with a stable phase offset.
 
 Author
 
