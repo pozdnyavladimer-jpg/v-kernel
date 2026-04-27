@@ -441,6 +441,34 @@ field → behavior → symbol → logic → memory
 The Diffusion State Language is the first symbolic grammar of V-Kernel field computation.
 
 ---
+## D16_ROBUSTNESS_TEST
+
+Notebook:
+
+notebooks/diffusion_robustness_test.ipynb
+
+Meaning:
+
+Stress test for the complete D15 field I/O loop.
+
+The system is tested against noise, signal loss, delay drift, threshold drift,
+memory decay, combined stress, and an intentional break point.
+
+Observed result:
+
+Result: ROBUSTNESS_RANGE_LOCKED
+Input sequence: 10110101
+Normal worst accuracy: 1.0
+Overall worst accuracy: 0.5
+Mean full-loop accuracy: 0.938
+
+Interpretation:
+
+The field I/O loop remains stable under normal and combined stress conditions.
+The break-point case intentionally exceeds the operating range and shows where
+the system begins to fail.
+
+This defines a measurable robustness envelope for the field-based memory loop.
 
 Author
 
