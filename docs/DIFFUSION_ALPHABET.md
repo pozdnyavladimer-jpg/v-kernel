@@ -1,121 +1,89 @@
-Diffusion Alphabet Module
+Diffusion State Language
 
 Status
 
-Prototype implemented and integrated into the V-Kernel research pipeline.
+Working prototype.
 
-This module now contains two connected directions:
+The Diffusion State Language is the symbolic language layer of the V-Kernel diffusion experiments.
 
-1. Geometric diffusion alphabet
-2. Field-based logic symbols
-
-Together, they form the first version of the V-Kernel Diffusion Alphabet.
+It describes how field behavior can be mapped into symbolic states, logic gates, and future decision structures.
 
 ---
 
 What is this?
 
-The Diffusion Alphabet module explores how continuous spatial fields can be transformed into symbolic structures.
+Diffusion State Language is a symbolic system built from the behavior of spatial fields.
 
-It creates a bridge between:
+Instead of treating computation only as direct code instructions, this layer treats computation as:
 
-field → geometry → symbol → logic
+field → interaction → state → symbol → logic
 
-The system uses diffusion dynamics to generate patterns, measure their structure, classify them, and map stable behaviors into symbolic states.
+Each symbol represents a stable behavior pattern of a diffusion field.
+
+A symbol can describe:
+
+- empty field
+- decay
+- stabilization
+- overlap
+- suppression
+- interference
+- memory
+- transition
 
 ---
 
 Core Idea
 
-This module treats patterns not as images, but as fields with measurable geometry and behavior.
+The core idea is simple:
 
-A diffusion field can become:
+A field can behave like a symbol.
 
-- a topological structure
-- a geometric signature
-- a symbolic class
-- a logic state
-- a memory candidate
+When a diffusion field stabilizes, decays, overlaps, or suppresses itself, that behavior can be named and reused as a computational unit.
 
-The main idea is:
-
-symbols can emerge from stabilized field behavior.
+This creates a language of field behavior.
 
 ---
 
-Part 1 — Geometric Diffusion Alphabet
+Relation to Diffusion Alphabet
 
-The first part of the module uses reaction-diffusion dynamics, especially the Gray-Scott model, to generate emergent spatial patterns.
+The Diffusion Alphabet describes the symbolic states discovered from diffusion behavior.
 
-The pipeline is:
+The Diffusion State Language describes how those symbols can be composed into logic and computation.
 
-1. Generate diffusion field
-2. Threshold field into binary mask
-3. Extract connected regions
-4. Compute geometric features
-5. Normalize feature vectors
-6. Cluster patterns with KMeans
-7. Assign symbolic labels
+In simple terms:
+
+Diffusion Alphabet = list of symbols
+
+Diffusion State Language = rules for using those symbols
 
 ---
 
-Extracted Features
+Current Logic Symbols
 
-The current prototype extracts features such as:
-
-- region count
-- average area
-- roundness
-- elongation
-- density
-- structure
-- flow / gradient energy
-
-These features describe the geometry and behavior of the field.
-
-They allow the system to compare different patterns and group them into symbolic classes.
-
----
-
-Geometric Symbol Groups
-
-The system can discover pattern families such as:
-
-Symbol| Pattern Family
-D7_RING| ring / mandala-like structure
-D8_FLOWER| radial / flower-like structure
-D9_GRID| grid / lattice-like structure
-D11_WAVE| wave or cellular structure
-D12_LOW_STRUCTURE| empty or low-structure field
-
-These groups are not manually drawn.
-
-They emerge from clustering measured field features.
-
----
-
-Part 2 — Field-Based Logic Symbols
-
-The second part of the module explores logic gates built from diffusion behavior.
-
-Instead of writing logic directly as code, the system lets logic appear through field interaction.
-
-The current experiments produced three important symbolic states:
+The current working symbolic set contains four logic symbols:
 
 Symbol| Name| Logic
-D3_OR_STABLE| Single-field OR-like stabilization| OR
+D3_OR_STABLE| Single-field OR stabilization| OR
 D4_AND_OVERLAP| Two-field overlap stabilization| AND
-D5_INHIBITION| Two-field conflict suppression| Inhibition / XOR-base
+D5_INHIBITION| Conflict suppression| inhibition
+D6_XOR_INTERFERENCE| Destructive interference| XOR
+
+These symbols are implemented as separate notebooks.
 
 ---
 
-D3_OR_STABLE — Single-Field Diffusion Gate
+D3_OR_STABLE
 
 Notebook:
 
 notebooks/diffusion_or_gate_single_field.ipynb
 
-Result:
+Meaning:
+
+A single-field system where any active input can stabilize the output.
+
+Truth table:
 
 A| B| State| Output
 0| 0| EMPTY| 0
@@ -125,29 +93,27 @@ A| B| State| Output
 
 Interpretation:
 
-A single active input is enough to stabilize the field.
+One or more active inputs create a stable field.
 
-This means the system behaves as an OR-like diffusion gate:
+This is OR-like behavior.
 
-one or more active inputs → stable field
+Field rule:
 
-Diffusion Alphabet symbol:
-
-D3_OR_STABLE
-
-Meaning:
-
-A single-field system where any active input can trigger a stable output state.
+any active input → stable field
 
 ---
 
-D4_AND_OVERLAP — Two-Field Diffusion AND Gate
+D4_AND_OVERLAP
 
 Notebook:
 
 notebooks/diffusion_and_gate.ipynb
 
-Result:
+Meaning:
+
+A two-field system where stable output appears only when two independent fields overlap.
+
+Truth table:
 
 A| B| State| Output
 0| 0| EMPTY| 0
@@ -157,47 +123,33 @@ A| B| State| Output
 
 Interpretation:
 
-A single input is not enough to stabilize the output field.
+A single input is not enough.
 
-Stable output appears only when two independent fields overlap.
+Both fields must be active and overlap to create a stable output.
 
-Field architecture:
+Field rule:
 
-Input A creates field X.
+X field from A
+Y field from B
+Z output grows from X multiplied by Y
 
-Input B creates field Y.
+Logic meaning:
 
-Output field Z grows only where X and Y overlap.
-
-In simple form:
-
-Z grows from X multiplied by Y
-
-This creates AND behavior:
-
-A only → no stable output
-
-B only → no stable output
-
-A and B together → overlap → stable output
-
-Diffusion Alphabet symbol:
-
-D4_AND_OVERLAP
-
-Meaning:
-
-A two-field system where stable output appears only from the overlap between two independent input fields.
+both inputs required → stable field
 
 ---
 
-D5_INHIBITION — Diffusion Suppression Gate
+D5_INHIBITION
 
 Notebook:
 
 notebooks/diffusion_inhibition_gate.ipynb
 
-Result:
+Meaning:
+
+A two-field system where each individual input can create a stable output, but the overlap between both fields suppresses the output.
+
+Truth table:
 
 A| B| State| Output
 0| 0| EMPTY| 0
@@ -207,125 +159,189 @@ A| B| State| Output
 
 Interpretation:
 
-A single active input can stabilize the field.
+One active input stabilizes the field.
 
-When both inputs are active, their overlap creates a conflict zone.
+Two active inputs create a conflict zone.
 
-Instead of strengthening the output, the conflict zone suppresses it.
+The conflict zone suppresses the output.
 
-This means the system behaves as a diffusion-based inhibition gate:
-
-one active input → stable field
-
-two active inputs → suppressed field
-
-Diffusion Alphabet symbol:
-
-D5_INHIBITION
-
-Family:
-
-Logic / Suppression / Conflict
-
-Meaning:
-
-A two-field system where each individual input can create a stable output, but the overlap between both fields suppresses the output.
-
-Field architecture:
-
-Input A creates field X.
-
-Input B creates field Y.
-
-The output field Z grows from individual field activity.
-
-The overlap between X and Y creates a conflict zone.
-
-The conflict zone reduces or destroys the output field.
-
-In simple form:
+Field rule:
 
 single field → growth
 
 overlap of two fields → suppression
 
-Observed output:
+Logic meaning:
 
-A=0 B=0 → EMPTY
+individual signal survives
+combined signal is suppressed
 
-A=1 B=0 → STABLE
+---
 
-A=0 B=1 → STABLE
+D6_XOR_INTERFERENCE
 
-A=1 B=1 → SUPPRESSED
+Notebook:
 
-This confirms that D5_INHIBITION is a working diffusion alphabet symbol.
+notebooks/diffusion_xor_interference_gate.ipynb
+
+Meaning:
+
+A two-field system where exactly one active input produces a stable output, while two active inputs destroy or suppress the output through interference.
+
+Truth table:
+
+A| B| State| Output
+0| 0| EMPTY| 0
+1| 0| STABLE| 1
+0| 1| STABLE| 1
+1| 1| INTERFERENCE| 0
+
+Interpretation:
+
+Exactly one active input creates stable output.
+
+Two active inputs create destructive interference.
+
+Field rule:
+
+one active field → stable output
+
+two active fields → interference zone
+
+Logic meaning:
+
+exactly one input required → output 1
+
+---
+
+Symbol Families
+
+The language currently has several symbol families.
+
+Base Symbols
+
+Symbol| Meaning
+D0_EMPTY| no active field
+D1_DECAY| signal exists but does not survive
+D2_STABLE| stable field structure
+
+Logic Symbols
+
+Symbol| Meaning
+D3_OR_STABLE| one or more inputs stabilize the field
+D4_AND_OVERLAP| only overlap of two fields creates stable output
+D5_INHIBITION| individual inputs stabilize, overlap suppresses
+D6_XOR_INTERFERENCE| exactly one input stabilizes, two interfere
+
+Geometry Symbols
+
+Symbol| Meaning
+D7_RING| ring or mandala-like structure
+D8_FLOWER| radial flower-like structure
+D9_GRID| lattice-like structure
+D11_WAVE| wave or cellular structure
+D12_LOW_STRUCTURE| weakly structured or empty field
+
+Memory Symbols
+
+Symbol| Meaning
+D10_MEMORY_HOLD| structure persists after input is removed
+
+---
+
+Language Grammar
+
+The first grammar of the Diffusion State Language can be written as:
+
+input fields → interaction rule → field state → symbol → output
+
+Examples:
+
+A or B → single-field stabilization → D3_OR_STABLE → output 1
+
+A and B → two-field overlap → D4_AND_OVERLAP → output 1
+
+A plus B conflict → suppression → D5_INHIBITION → output 0
+
+exactly one of A or B → interference logic → D6_XOR_INTERFERENCE → output 1
+
+---
+
+Symbol Composition
+
+Symbols can be composed into higher-level logic.
+
+Example:
+
+D3_OR_STABLE plus D5_INHIBITION can produce D6_XOR_INTERFERENCE.
+
+Meaning:
+
+OR gives output when one or more inputs are active.
+
+INHIBITION removes output when both inputs are active.
+
+Together, they create XOR behavior.
+
+In symbolic form:
+
+OR plus suppression of overlap → XOR
 
 ---
 
 Relation to V-Kernel
 
-This module implements a low-level instance of V-Kernel principles:
+The Diffusion State Language is a low-level symbolic layer inside V-Kernel.
 
-V-Kernel Concept| Implementation
-Field| diffusion grid
-Structure| region extraction
-Flow| gradient / pattern formation
-Memory| clustering and symbolic mapping
-Symbol| diffusion alphabet
-Logic| field-based gate behavior
-Convergence| stable pattern grouping
+V-Kernel Concept| Diffusion State Language Role
+Field| spatial diffusion grid
+Structure| stable or decaying field form
+Flow| diffusion and gradient movement
+Memory| repeated symbolic state patterns
+Symbol| named diffusion state
+Logic| field interaction behavior
+Decision| output from detected symbolic state
+
+The language gives V-Kernel a way to convert field behavior into reusable symbolic units.
 
 ---
 
-Key Insight
+Relation to GSL Text Encoder
 
-The system shows that field behavior can produce symbolic states.
+The GSL Text Encoder maps natural language and code into a shared 6D behavioral state.
 
-The important transition is:
+That 6D state can later be used to control diffusion parameters.
 
-field → structure → symbol → logic
+Future pipeline:
 
-This means computation can be explored as spatial stabilization of fields.
+text or code → 6D state → diffusion parameters → field behavior → diffusion symbol → decision
 
-The module does not replace classical computing.
+Example:
 
-Instead, it adds a field-based representation and computation layer.
+unstable text or code → high pressure state → decay or inhibition symbol
+
+structured balanced text → stable state → memory or structure symbol
+
+This connects language, code, geometry, and field behavior.
 
 ---
 
 Why This Matters
 
-This module demonstrates that symbolic structures can emerge from physics-like processes.
+The Diffusion State Language turns diffusion experiments into a symbolic system.
 
-The symbols are not manually drawn.
+Without this layer, the notebooks are only separate simulations.
 
-They are discovered from:
+With this layer, each experiment becomes a letter in a field-based language.
 
-- field behavior
-- geometric structure
-- stabilization
-- decay
-- overlap
-- suppression
-- interaction
+The current language already contains:
 
-This is a step toward field-native computation.
+OR
+AND
+INHIBITION
+XOR
 
----
-
-Current Output
-
-The module currently produces:
-
-- generated diffusion patterns
-- geometric feature statistics
-- cluster groups
-- symbolic mapping
-- OR-like field gate
-- AND overlap field gate
-- inhibition / suppression field gate
-- early diffusion alphabet table
+This means V-Kernel now has a minimal working set of field-based logical symbols.
 
 ---
 
@@ -341,19 +357,44 @@ notebooks/diffusion_or_gate_single_field.ipynb
 
 Purpose:
 
-Demonstrates D3_OR_STABLE, a single-field OR-like stabilization gate.
+Demonstrates D3_OR_STABLE.
 
 notebooks/diffusion_and_gate.ipynb
 
 Purpose:
 
-Demonstrates D4_AND_OVERLAP, a two-field diffusion AND gate.
+Demonstrates D4_AND_OVERLAP.
 
 notebooks/diffusion_inhibition_gate.ipynb
 
 Purpose:
 
-Demonstrates D5_INHIBITION, a two-field conflict suppression gate.
+Demonstrates D5_INHIBITION.
+
+notebooks/diffusion_xor_interference_gate.ipynb
+
+Purpose:
+
+Demonstrates D6_XOR_INTERFERENCE.
+
+---
+
+Current Symbol Table
+
+Symbol| Name| Family| Output Rule
+D0_EMPTY| Empty| Base| no input gives no output
+D1_DECAY| Decay| Base| weak signal disappears
+D2_STABLE| Stable| Base| stable field gives output
+D3_OR_STABLE| OR Stabilization| Logic| one or more inputs give output
+D4_AND_OVERLAP| AND Overlap| Logic| both inputs required
+D5_INHIBITION| Conflict Suppression| Logic| overlap suppresses output
+D6_XOR_INTERFERENCE| XOR Interference| Logic| exactly one input gives output
+D7_RING| Ring| Geometry| ring-like structure
+D8_FLOWER| Flower| Geometry| radial structure
+D9_GRID| Grid| Geometry| lattice structure
+D10_MEMORY_HOLD| Memory Hold| Memory| structure persists
+D11_WAVE| Wave| Geometry| wave or cellular structure
+D12_LOW_STRUCTURE| Low Structure| Geometry| weakly structured field
 
 ---
 
@@ -361,33 +402,29 @@ Future Work
 
 Next steps:
 
-- add D6_XOR_INTERFERENCE
-- add memory-hold state
-- add temporal tracking of field evolution
-- connect symbols into graphs
-- build adaptive clustering without fixed K
-- connect GSL text encoder to diffusion parameters
-- map 6D text/code state into field behavior
-- test hardware mapping with FPGA or analog compute
+- convert symbols into src/diffusion/alphabet.py
+- create reusable detector functions
+- create reusable gate functions
+- add memory-hold experiment
+- add temporal evolution tracking
+- build graph connections between symbols
+- connect GSL 6D state to diffusion parameters
+- create a visual table of diffusion symbols
+- test chained gates
+- test robustness across parameter ranges
+- explore hardware mapping with FPGA or analog compute
 
 ---
 
-Diffusion Alphabet Table — Initial Version
+Engineering Interpretation
 
-Symbol| Name| Family| Meaning
-D0_EMPTY| EMPTY| Base| no active field
-D1_DECAY| DECAY| Base| signal exists but does not survive
-D2_STABLE| STABLE| Base| stable field structure
-D3_OR_STABLE| OR Stabilization| Logic| one or more inputs stabilize the field
-D4_AND_OVERLAP| AND Overlap| Logic| only overlap of two fields creates stable output
-D5_INHIBITION| Conflict Suppression| Logic| individual inputs stabilize, overlap suppresses
-D6_XOR_INTERFERENCE| XOR / Interference| Logic| planned next experiment
-D7_RING| Ring| Geometry| ring or mandala-like structure
-D8_FLOWER| Flower| Geometry| radial flower-like structure
-D9_GRID| Grid| Geometry| lattice-like structure
-D10_MEMORY_HOLD| Memory Hold| Memory| structure persists after input is removed
-D11_WAVE| Wave| Geometry| wave or cellular structure
-D12_LOW_STRUCTURE| Low Structure| Geometry| empty or weakly structured field
+This project does not claim to replace classical computation.
+
+It defines a field-based symbolic layer that can run on top of classical simulation today and may later map to physical or analog systems.
+
+The important engineering claim is:
+
+field behavior can be measured, named, and reused as symbolic computation.
 
 ---
 
@@ -395,11 +432,13 @@ Philosophy
 
 This is not image processing.
 
+This is not only pattern generation.
+
 This is:
 
-geometry → structure → symbol → logic
+field → behavior → symbol → logic → memory
 
-The Diffusion Alphabet is a symbolic layer built from field behavior.
+The Diffusion State Language is the first symbolic grammar of V-Kernel field computation.
 
 ---
 
