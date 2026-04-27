@@ -808,7 +808,53 @@ can one field cell transmit state information to another?
 Result:
 
 yes — the transmitted sequence was decoded with 100% accuracy.
+## D13_WAVE_TO_MEMORY
 
+Notebook:
+
+notebooks/diffusion_wave_to_memory.ipynb
+
+Meaning:
+
+A wave-transmitted signal is decoded by a follower field cell and written into bounded memory slots.
+
+Observed result:
+
+| Metric | Value |
+|---|---|
+| Result | MEMORY_WRITE_LOCKED |
+| Input sequence | 10110101 |
+| Decoded sequence | 10110101 |
+| Stored sequence | 10110101 |
+| Decode accuracy | 1.0 |
+| Memory accuracy | 1.0 |
+| Bit length | 120 |
+| Decode delay | 35 |
+| Decode threshold | 0.38 |
+
+Interpretation:
+
+The leader cell sends a binary wave sequence.
+
+The bridge carries the signal.
+
+The follower receives and decodes the sequence.
+
+The decoded bits are written into memory slots.
+
+A bistable memory rule keeps low values near 0 and high values near 1.
+
+Field rule:
+
+wave signal → follower decode → bistable memory write
+
+Engineering meaning:
+
+D13_WAVE_TO_MEMORY is the first working prototype where field communication changes stored memory state.
+
+Result:
+
+yes — the transmitted sequence was decoded and stored with 100% accuracy.
 
 Author
 
