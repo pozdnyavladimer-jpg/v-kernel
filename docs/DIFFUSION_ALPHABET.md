@@ -82,11 +82,11 @@ Geometric Symbol Groups
 The system can discover pattern families such as:
 
 Symbol| Pattern Family
-D0| empty or low-structure field
-D1| radial / flower-like structure
-D2| ring / mandala-like structure
-D3| grid / lattice-like structure
-D4| wave or cellular structure
+D7_RING| ring / mandala-like structure
+D8_FLOWER| radial / flower-like structure
+D9_GRID| grid / lattice-like structure
+D11_WAVE| wave or cellular structure
+D12_LOW_STRUCTURE| empty or low-structure field
 
 These groups are not manually drawn.
 
@@ -100,11 +100,12 @@ The second part of the module explores logic gates built from diffusion behavior
 
 Instead of writing logic directly as code, the system lets logic appear through field interaction.
 
-The current experiments produced two important symbolic states:
+The current experiments produced three important symbolic states:
 
 Symbol| Name| Logic
 D3_OR_STABLE| Single-field OR-like stabilization| OR
 D4_AND_OVERLAP| Two-field overlap stabilization| AND
+D5_INHIBITION| Two-field conflict suppression| Inhibition / XOR-base
 
 ---
 
@@ -163,7 +164,9 @@ Stable output appears only when two independent fields overlap.
 Field architecture:
 
 Input A creates field X.
+
 Input B creates field Y.
+
 Output field Z grows only where X and Y overlap.
 
 In simple form:
@@ -173,7 +176,9 @@ Z grows from X multiplied by Y
 This creates AND behavior:
 
 A only → no stable output
+
 B only → no stable output
+
 A and B together → overlap → stable output
 
 Diffusion Alphabet symbol:
@@ -183,6 +188,78 @@ D4_AND_OVERLAP
 Meaning:
 
 A two-field system where stable output appears only from the overlap between two independent input fields.
+
+---
+
+D5_INHIBITION — Diffusion Suppression Gate
+
+Notebook:
+
+notebooks/diffusion_inhibition_gate.ipynb
+
+Result:
+
+A| B| State| Output
+0| 0| EMPTY| 0
+1| 0| STABLE| 1
+0| 1| STABLE| 1
+1| 1| SUPPRESSED| 0
+
+Interpretation:
+
+A single active input can stabilize the field.
+
+When both inputs are active, their overlap creates a conflict zone.
+
+Instead of strengthening the output, the conflict zone suppresses it.
+
+This means the system behaves as a diffusion-based inhibition gate:
+
+one active input → stable field
+
+two active inputs → suppressed field
+
+Diffusion Alphabet symbol:
+
+D5_INHIBITION
+
+Family:
+
+Logic / Suppression / Conflict
+
+Meaning:
+
+A two-field system where each individual input can create a stable output, but the overlap between both fields suppresses the output.
+
+Field architecture:
+
+Input A creates field X.
+
+Input B creates field Y.
+
+The output field Z grows from individual field activity.
+
+The overlap between X and Y creates a conflict zone.
+
+The conflict zone reduces or destroys the output field.
+
+In simple form:
+
+single field → growth
+
+overlap of two fields → suppression
+
+Observed output:
+
+A=0 B=0 → EMPTY
+
+A=1 B=0 → STABLE
+
+A=0 B=1 → STABLE
+
+A=1 B=1 → SUPPRESSED
+
+This confirms that D5_INHIBITION is a working diffusion alphabet symbol.
 
 ---
 
@@ -230,6 +307,7 @@ They are discovered from:
 - stabilization
 - decay
 - overlap
+- suppression
 - interaction
 
 This is a step toward field-native computation.
@@ -246,6 +324,7 @@ The module currently produces:
 - symbolic mapping
 - OR-like field gate
 - AND overlap field gate
+- inhibition / suppression field gate
 - early diffusion alphabet table
 
 ---
@@ -270,13 +349,18 @@ Purpose:
 
 Demonstrates D4_AND_OVERLAP, a two-field diffusion AND gate.
 
+notebooks/diffusion_inhibition_gate.ipynb
+
+Purpose:
+
+Demonstrates D5_INHIBITION, a two-field conflict suppression gate.
+
 ---
 
 Future Work
 
 Next steps:
 
-- add D5_INHIBITION
 - add D6_XOR_INTERFERENCE
 - add memory-hold state
 - add temporal tracking of field evolution
@@ -291,17 +375,19 @@ Next steps:
 Diffusion Alphabet Table — Initial Version
 
 Symbol| Name| Family| Meaning
-D0| EMPTY| Base| no active field
-D1| DECAY| Base| signal exists but does not survive
-D2| STABLE| Base| stable field structure
-D3_OR_STABLE| OR Logic| Logic| one or more inputs stabilize the field
-D4_AND_OVERLAP| AND Logic| Logic| only overlap of two fields creates stable output
-D5_INHIBITION| Inhibition| Logic| one field suppresses another
-D6_XOR_INTERFERENCE| XOR / Interference| Logic| only one signal survives, two together cancel
+D0_EMPTY| EMPTY| Base| no active field
+D1_DECAY| DECAY| Base| signal exists but does not survive
+D2_STABLE| STABLE| Base| stable field structure
+D3_OR_STABLE| OR Stabilization| Logic| one or more inputs stabilize the field
+D4_AND_OVERLAP| AND Overlap| Logic| only overlap of two fields creates stable output
+D5_INHIBITION| Conflict Suppression| Logic| individual inputs stabilize, overlap suppresses
+D6_XOR_INTERFERENCE| XOR / Interference| Logic| planned next experiment
 D7_RING| Ring| Geometry| ring or mandala-like structure
 D8_FLOWER| Flower| Geometry| radial flower-like structure
 D9_GRID| Grid| Geometry| lattice-like structure
-D10_MEMORY_HOLD| Memory| Memory| structure persists after input is removed
+D10_MEMORY_HOLD| Memory Hold| Memory| structure persists after input is removed
+D11_WAVE| Wave| Geometry| wave or cellular structure
+D12_LOW_STRUCTURE| Low Structure| Geometry| empty or weakly structured field
 
 ---
 
