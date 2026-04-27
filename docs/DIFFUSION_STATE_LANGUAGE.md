@@ -901,6 +901,69 @@ This is the first complete V-Kernel diffusion I/O loop.
 Important note:
 
 This is a controlled prototype. It demonstrates the architecture under clean simulation conditions. The next step is to test robustness under noise, signal loss, delay variation, threshold drift, and memory decay.
+## D16_ROBUSTNESS_TEST
+
+Notebook:
+
+notebooks/diffusion_robustness_test.ipynb
+
+Meaning:
+
+Stress test for the complete D15 field I/O loop.
+
+The system is tested against noise, signal loss, delay drift, threshold drift,
+memory decay, combined stress, and an intentional break point.
+
+Observed result:
+
+Result: ROBUSTNESS_RANGE_LOCKED
+Input sequence: 10110101
+Normal worst accuracy: 1.0
+Overall worst accuracy: 0.5
+Mean full-loop accuracy: 0.938
+
+Interpretation:
+
+The field I/O loop remains stable under normal and combined stress conditions.
+The break-point case intentionally exceeds the operating range and shows where
+the system begins to fail.
+
+This defines a measurable robustness envelope for the field-based memory loop.
+## D17_ERROR_CORRECTION
+
+Notebook:
+
+`notebooks/diffusion_error_correction.ipynb`
+
+Meaning:
+
+A damaged redundant wave signal is repaired through majority voting.
+
+The system expands each bit into multiple field copies, allows some copies to be corrupted, then reconstructs the original binary sequence from the surviving majority.
+
+Observed result:
+
+| Metric | Value |
+|---|---|
+| Result | ERROR_CORRECTION_LOCKED |
+| Input sequence | 10110101 |
+| Encoded sequence | 111000111111000111000111 |
+| Raw decoded copies | 101010110101010101010101 |
+| Corrected sequence | 10110101 |
+| Copies per bit | 3 |
+| Raw copy accuracy | 0.667 |
+| Corrected accuracy | 1.0 |
+| Damaged copies | 8 |
+
+Interpretation:
+
+D17 proves that the V-Kernel field memory pipeline can tolerate local corruption.
+
+This adds the first recovery layer after the full I/O loop:
+
+input wave → decode → memory write → memory readout → output wave → error correction
+
+This is the first step from field memory toward fault-tolerant field computation.
 
 Author
 
