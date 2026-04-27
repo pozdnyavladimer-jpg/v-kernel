@@ -763,6 +763,52 @@ can two field clocks align their rhythm?
 Result:
 
 yes — the cells reached a shared frequency with a stable phase offset.
+## D12_WAVE_CHANNELS
+
+Notebook:
+
+notebooks/diffusion_wave_channels.ipynb
+
+Meaning:
+
+A leader field cell transmits a binary signal sequence to a follower field cell through a wave-like channel.
+
+Observed result:
+
+| Metric | Value |
+|---|---|
+| Result | CHANNEL_LOCKED |
+| Input sequence | 10110101 |
+| Decoded sequence | 10110101 |
+| Accuracy | 1.0 |
+| Bit length | 120 |
+| Decode delay | 35 |
+| Decode threshold | 0.38 |
+
+Interpretation:
+
+The leader cell sent an amplitude-modulated binary sequence.
+
+The bridge carried the wave signal.
+
+The follower cell received and decoded the sequence correctly.
+
+Field rule:
+
+leader signal + bridge channel + follower decoder → transmitted state sequence
+
+Engineering meaning:
+
+D12_WAVE_CHANNELS is the first working prototype of field-based communication between bounded cells.
+
+It answers:
+
+can one field cell transmit state information to another?
+
+Result:
+
+yes — the transmitted sequence was decoded with 100% accuracy.
+
 
 Author
 
