@@ -352,3 +352,11 @@ coherence clocking
 The current locked frontier is:
 D35_SPECTRAL_COHERENCE_CLOCK
 D36_SPECTRAL_COHERENCE_BUS
+## Spectral Coherence Development
+
+Continuation after D35:
+
+[docs/SPECTRAL_COHERENCE_DEVELOPMENT_AFTER_D35.md](docs/SPECTRAL_COHERENCE_DEVELOPMENT_AFTER_D35.md)
+``` [❶](code://python)
+```
+---
