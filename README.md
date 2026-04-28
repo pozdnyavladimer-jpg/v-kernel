@@ -333,3 +333,22 @@ bare_except.py → LOW (instability detected)
 
 👉 code → state → convergence → stability
 ---
+## Development History
+
+The continuation after the original Diffusion Alphabet is documented here:
+
+[docs/DIFFUSION_DEVELOPMENT_HISTORY_AFTER_ALPHABET.md](docs/DIFFUSION_DEVELOPMENT_HISTORY_AFTER_ALPHABET.md)
+28. Final statement
+After D35, V-Kernel has a working simulated chain for:
+symbolic diffusion logic
+bounded memory
+field communication
+fault recovery
+runtime supervision
+spectral memory
+photon-like exchange
+interference arbitration
+coherence clocking
+The current locked frontier is:
+D35_SPECTRAL_COHERENCE_CLOCK
+D36_SPECTRAL_COHERENCE_BUS
